@@ -71,7 +71,14 @@ public class Main_Run extends AppCompatActivity {
         btn_10s = findViewById(R.id.btn_10s);
         btn_huys.setVisibility(View.GONE);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.amthanhwushu);
+//        mediaPlayer = MediaPlayer.create(this, R.raw.wushu_269_1);
+        // code moi
+        mediaPlayer = MediaPlayer.create(this, R.raw.wushu_269_1);
+        mediaPlayer.setOnCompletionListener(mp -> {
+            soundCurrentPosition = 0;
+            soundPlaying = false;
+            // Không cần làm gì thêm, chỉ reset trạng thái
+        });
 
 
         getWindow().getDecorView().setSystemUiVisibility(
@@ -139,7 +146,7 @@ public class Main_Run extends AppCompatActivity {
 
                 isCountdown10s = true;
 
-                startTemporaryTimer(11000); // Bắt đầu 10s
+                startTemporaryTimer(11000, false); // Bắt đầu 10s
             }
         });
 
@@ -148,13 +155,18 @@ public class Main_Run extends AppCompatActivity {
                 Toast.makeText(Main_Run.this, "Không thể tắt khi onoff đang bật", Toast.LENGTH_SHORT).show();
             } else {
                 stopTemporaryTimer();
+//                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+//                    mediaPlayer.stop();
+//                    try {
+//                        mediaPlayer.prepare();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+                // code moi
                 if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    try {
-                        mediaPlayer.prepare();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    mediaPlayer.pause(); // Chỉ tạm dừng
+                    soundCurrentPosition = 0; // Reset vị trí
                 }
 
                 // Trả lại trạng thái cho timer chính
@@ -197,7 +209,7 @@ public class Main_Run extends AppCompatActivity {
                         }
                         btn_run.setText("Tiếp tục");
                     } else {
-                        startTemporaryTimer(previousTimeInMillis);
+                        startTemporaryTimer(previousTimeInMillis, true);
                         if (isCountdown10s) {
                             resumeSound(); // ✅ thêm dòng này để tiếp tục phát lại
                             sendSoundControlMessage("resumeSound");
@@ -266,20 +278,29 @@ public class Main_Run extends AppCompatActivity {
         btn_run.setText("Dừng");
     }
 
-    private void startTemporaryTimer(long duration) {
+    private void startTemporaryTimer(long duration, boolean isResuming) {
         previousTimeInMillis = duration;
 
-        // Dừng âm thanh timer chính và lưu lại vị trí
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            soundCurrentPosition = mediaPlayer.getCurrentPosition();
-            mediaPlayer.pause();
+        // Chỉ lưu trạng thái âm thanh của timer CHÍNH khi bắt đầu timer 10s (chứ không phải khi resume)
+        if (!isResuming) {
+            // Dừng âm thanh timer chính và lưu lại vị trí
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                soundCurrentPosition = mediaPlayer.getCurrentPosition();
+                mediaPlayer.pause();
+            }
+            isCountdown10s = true;
         }
 
-        isCountdown10s = true;
-
-        // Phát âm thanh cho timer 10s từ đầu
-        soundCurrentPosition = 0;
-        playSound();
+        // ✅ ĐÂY LÀ LOGIC SỬA LỖI
+        if (isResuming) {
+            // Nếu là "Tiếp tục", thì phát tiếp âm thanh từ vị trí đã lưu
+            resumeSound();
+            sendSoundControlMessage("resumeSound");
+        } else {
+            // Nếu là "Bắt đầu mới" (từ btn_10s), thì phát từ đầu
+            soundCurrentPosition = 0;
+            playSound();
+        }
 
         temporaryCountDownTimer = new CountDownTimer(duration, 1000) {
             @Override
@@ -312,13 +333,18 @@ public class Main_Run extends AppCompatActivity {
                         soundPlaying = true;
                     } else {
                         soundPlaying = false;
+//                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+//                            mediaPlayer.stop();
+//                            try {
+//                                mediaPlayer.prepare();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+                        // code moi
                         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                            mediaPlayer.stop();
-                            try {
-                                mediaPlayer.prepare();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            mediaPlayer.pause();
+                            soundCurrentPosition = 0;
                         }
                     }
 
@@ -511,30 +537,46 @@ public class Main_Run extends AppCompatActivity {
     private void playSound() {
         try {
             // Nếu mediaPlayer đã tồn tại, không khởi tạo lại
+//            if (mediaPlayer == null) {
+//                mediaPlayer = MediaPlayer.create(this, R.raw.wushu_269_1);
+//            }
+            // code moi
             if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(this, R.raw.soudwushu);
+                mediaPlayer = MediaPlayer.create(this, R.raw.wushu_269_1);
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    soundCurrentPosition = 0;
+                    soundPlaying = false;
+                });
             }
 
             // Nếu đang phát, dừng và chuẩn bị lại
+//            if (mediaPlayer.isPlaying()) {
+//                mediaPlayer.stop();
+//                mediaPlayer.prepare();
+//            }
+//
+//            // Đảm bảo vị trí không vượt quá thời lượng âm thanh
+//            int soundDuration = mediaPlayer.getDuration();
+//            if (soundCurrentPosition < 0 || soundCurrentPosition >= soundDuration) {
+//                soundCurrentPosition = 0;
+//            }
+//
+//            mediaPlayer.seekTo(soundCurrentPosition);
+//            mediaPlayer.start();
+//            soundPlaying = true;
+//
+//            mediaPlayer.setOnCompletionListener(mp -> {
+//                soundCurrentPosition = 0;
+//                soundPlaying = false;
+//            });
+            // code moi
             if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-                mediaPlayer.prepare();
+                mediaPlayer.pause(); // Tạm dừng nếu nó đang phát cái gì đó
             }
-
-            // Đảm bảo vị trí không vượt quá thời lượng âm thanh
-            int soundDuration = mediaPlayer.getDuration();
-            if (soundCurrentPosition < 0 || soundCurrentPosition >= soundDuration) {
-                soundCurrentPosition = 0;
-            }
-
-            mediaPlayer.seekTo(soundCurrentPosition);
-            mediaPlayer.start();
+            soundCurrentPosition = 0; // Đặt lại vị trí
+            mediaPlayer.seekTo(soundCurrentPosition); // Tua về 0
+            mediaPlayer.start(); // Phát
             soundPlaying = true;
-
-            mediaPlayer.setOnCompletionListener(mp -> {
-                soundCurrentPosition = 0;
-                soundPlaying = false;
-            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -572,30 +614,53 @@ public class Main_Run extends AppCompatActivity {
     private void playSoundAtPosition(int position) {
         try {
             // Nếu mediaPlayer chưa tồn tại, khởi tạo
+//            if (mediaPlayer == null) {
+//                mediaPlayer = MediaPlayer.create(this, R.raw.wushu_269_1);
+//            }
+            // code moi
             if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(this, R.raw.soudwushu);
+                mediaPlayer = MediaPlayer.create(this, R.raw.wushu_269_1);
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    soundCurrentPosition = 0;
+                    soundPlaying = false;
+                });
             }
 
             // Nếu đang phát, dừng và chuẩn bị lại
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-                mediaPlayer.prepare();
-            }
+//            if (mediaPlayer.isPlaying()) {
+//                mediaPlayer.stop();
+//                mediaPlayer.prepare();
+//            }
+//
+//            // Đảm bảo vị trí không vượt quá thời lượng âm thanh
+//            int soundDuration = mediaPlayer.getDuration();
+//            if (position < 0 || position >= soundDuration) {
+//                position = 0; // Nếu vị trí không hợp lệ, phát từ đầu
+//            }
+//
+//            mediaPlayer.seekTo(position);
+//            mediaPlayer.start();
+//            soundPlaying = true;
+//
+//            mediaPlayer.setOnCompletionListener(mp -> {
+//                soundCurrentPosition = 0;
+//                soundPlaying = false;
+//            });
 
-            // Đảm bảo vị trí không vượt quá thời lượng âm thanh
+            // code moi
             int soundDuration = mediaPlayer.getDuration();
             if (position < 0 || position >= soundDuration) {
                 position = 0; // Nếu vị trí không hợp lệ, phát từ đầu
             }
 
-            mediaPlayer.seekTo(position);
-            mediaPlayer.start();
-            soundPlaying = true;
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            }
 
-            mediaPlayer.setOnCompletionListener(mp -> {
-                soundCurrentPosition = 0;
-                soundPlaying = false;
-            });
+            soundCurrentPosition = position; // Lưu vị trí hiện tại
+            mediaPlayer.seekTo(position); // Tua đến vị trí
+            mediaPlayer.start(); // Phát
+            soundPlaying = true;
 
         } catch (Exception e) {
             e.printStackTrace();

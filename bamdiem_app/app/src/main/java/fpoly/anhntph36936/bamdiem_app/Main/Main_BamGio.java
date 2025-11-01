@@ -111,19 +111,24 @@ public class Main_BamGio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                sendWebSocketMessage("off");
-                Intent intent = new Intent(Main_BamGio.this, Main_Run.class);
-                intent.putExtra("id", itemId);
-                intent.putExtra("round", selectedRound);
-                intent.putExtra("minutes", minutes);
-                intent.putExtra("seconds", seconds);
-                intent.putExtra("diem_n1", diem_n1);
-                intent.putExtra("diem_n2", diem_n2);
-                if (item != null) {
-                    intent.putExtra("thidauModel", item); // Truyền đối tượng thidauModel hiện tại
+                if (selectedButtonTime == null || selectedRound == null){
+                    Toast.makeText(Main_BamGio.this, "Hãy chọn round và time", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e("Main_BamGio", "thidauModel is null"); // Log lỗi nếu item là null
+                    Intent intent = new Intent(Main_BamGio.this, Main_Run.class);
+                    intent.putExtra("id", itemId);
+                    intent.putExtra("round", selectedRound);
+                    intent.putExtra("minutes", minutes);
+                    intent.putExtra("seconds", seconds);
+                    intent.putExtra("diem_n1", diem_n1);
+                    intent.putExtra("diem_n2", diem_n2);
+                    if (item != null) {
+                        intent.putExtra("thidauModel", item); // Truyền đối tượng thidauModel hiện tại
+                    } else {
+                        Log.e("Main_BamGio", "thidauModel is null"); // Log lỗi nếu item là null
+                    }
+                    startActivity(intent);
                 }
-                startActivity(intent);
+
             }
         });
         btn_huy.setOnClickListener(new View.OnClickListener() {
