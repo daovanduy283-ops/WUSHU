@@ -167,6 +167,7 @@ const host = config;
                         document.getElementById('name_n2').value = item.name_n2;
                         document.getElementById('province_n2').value = item.province_n2;
                         document.getElementById('sex').value = item.sex;
+                        document.getElementById('type').value = item.type;
                         document.getElementById('group').value = item.group;
                         document.getElementById('weight').value = item.weight;
                         document.getElementById("dialog-title").textContent = "Update";
@@ -277,19 +278,19 @@ const host = config;
                         { value: '80kg', text: '80kg (trên 75kg đến 80kg) (Nhóm A - Giải VĐQG trẻ - Nam)' },
                     ],
                     B: [
-                        { value: 'Dưới 48kg', text: 'Dưới 48kg (Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm A - G(Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm A - G(Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '60kg', text: '60kg (trên 56kg đến 60kg) (Nhóm A - G(Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '65kg', text: '65kg (trên 60kg đến 65kg) (Nhóm A - G(Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '70kg', text: '70kg (trên 65kg đến 70kg) (Nhóm A - G(Nhóm A - Giải VĐQG trẻ - Nam)' },
+                        { value: 'Dưới 48kg', text: 'Dưới 48kg (Nhóm B - Giải VĐQG trẻ - Nam)' },
+                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm B - Giải VĐQG trẻ - Nam)' },
+                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm B - Giải VĐQG trẻ - Nam)' },
+                        { value: '60kg', text: '60kg (trên 56kg đến 60kg) (Nhóm B - Giải VĐQG trẻ - Nam)' },
+                        { value: '65kg', text: '65kg (trên 60kg đến 65kg) (Nhóm B - Giải VĐQG trẻ - Nam)' },
+                        { value: '70kg', text: '70kg (trên 65kg đến 70kg) (Nhóm B - Giải VĐQG trẻ - Nam)' },
                     ],
                     C: [
-                        { value: 'Dưới 45kg', text: 'Dưới 45kg (Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '48kg', text: '48kg (trên 45kg đến 48kg) (Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm A - Giải VĐQG trẻ - Nam)' },
-                        { value: '60kg', text: '60kg (trên 56kg đến 60kg) (Nhóm A - Giải VĐQG trẻ - Nam)' },
+                        { value: 'Dưới 45kg', text: 'Dưới 45kg (Nhóm C - Giải VĐQG trẻ - Nam)' },
+                        { value: '48kg', text: '48kg (trên 45kg đến 48kg) (Nhóm C - Giải VĐQG trẻ - Nam)' },
+                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm C - Giải VĐQG trẻ - Nam)' },
+                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm C - Giải VĐQG trẻ - Nam)' },
+                        { value: '60kg', text: '60kg (trên 56kg đến 60kg) (Nhóm C - Giải VĐQG trẻ - Nam)' },
                     ],
                     GiaiLon: [
                         { value: 'Dưới 48kg', text: 'Dưới 48kg (Giải VĐQG lớn - Nam)' },
@@ -316,19 +317,19 @@ const host = config;
                         { value: '70kg', text: '70kg (trên 65kg đến 70kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
                     ],
                     B: [
-                        { value: 'Dưới 45kg', text: 'Dưới 45kg (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '48kg', text: '48kg (trên 45kg đến 48kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '60kg', text: '60kg (trên 56kg đến 60kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '65kg', text: '65kg (trên 60kg đến 65kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
+                        { value: 'Dưới 45kg', text: 'Dưới 45kg (Nhóm B - Giải VĐQG trẻ - Nữ)' },
+                        { value: '48kg', text: '48kg (trên 45kg đến 48kg) (Nhóm B - Giải VĐQG trẻ - Nữ)' },
+                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm B - Giải VĐQG trẻ - Nữ)' },
+                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm B - Giải VĐQG trẻ - Nữ)' },
+                        { value: '60kg', text: '60kg (trên 56kg đến 60kg) (Nhóm B - Giải VĐQG trẻ - Nữ)' },
+                        { value: '65kg', text: '65kg (trên 60kg đến 65kg) (Nhóm B - Giải VĐQG trẻ - Nữ)' },
                     ],
                     C: [
-                        { value: 'Dưới 42kg', text: 'Dưới 42kg (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '45kg', text: '45kg (trên 42kg đến 45kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '48kg', text: '48kg (trên 45kg đến 48kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
-                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm A - Giải VĐQG trẻ - Nữ)' },
+                        { value: 'Dưới 42kg', text: 'Dưới 42kg (Nhóm C - Giải VĐQG trẻ - Nữ)' },
+                        { value: '45kg', text: '45kg (trên 42kg đến 45kg) (Nhóm C - Giải VĐQG trẻ - Nữ)' },
+                        { value: '48kg', text: '48kg (trên 45kg đến 48kg) (Nhóm C - Giải VĐQG trẻ - Nữ)' },
+                        { value: '52kg', text: '52kg (trên 48kg đến 52kg) (Nhóm C - Giải VĐQG trẻ - Nữ)' },
+                        { value: '56kg', text: '56kg (trên 52kg đến 56kg) (Nhóm C - Giải VĐQG trẻ - Nữ)' },
                     ],
                     GiaiLon: [
                         { value: 'Dưới 45kg', text: 'Dưới 45kg (Giải VĐQG lớn - Nữ)' },

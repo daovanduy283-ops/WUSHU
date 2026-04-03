@@ -6,7 +6,7 @@
 // module.exports = {
 //     uri: uri,
 // }
-const uri = 'mongodb+srv://wushu2024:3hyy9CJb6qJ7qXKL@cluster0.v6f46.mongodb.net/wushu';
+const uri = 'mongodb+srv://wushu2026:wushu2026@cluster0.3f0rmml.mongodb.net/wushu';
 module.exports = {
     uri: uri,
 }
