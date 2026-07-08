@@ -4,6 +4,11 @@ const WebSocket = require('ws');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const dns = require('dns');
+dns.setServers([
+    '1.1.1.1',
+    '8.8.8.8'
+]);
 
 const COMMON = require('./database/COMMON');
 const bdiemModel = require('./database/bdiemModel');
